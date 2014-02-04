@@ -20,7 +20,7 @@ class OmniAuth::Strategies::Doorkeeper < OmniAuth::Strategies::OAuth2
   end
 
   def raw_info
-    @raw_info ||= access_token.get(DoorkeeperSso.settings.me_path).parsed
+    @raw_info ||= access_token.get('/api/v1/me.json').parsed
   end
 
 end

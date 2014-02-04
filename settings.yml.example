@@ -3,7 +3,6 @@ title: doorkeeper log in
 message: Log in via doorkeeper (make sure your browser does not block popups)
 frame_width: 920
 frame_height: 800
-me_path: api/v1/me.json
 
 
 # enviornment specific settings:
