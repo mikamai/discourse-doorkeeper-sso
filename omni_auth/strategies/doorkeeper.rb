@@ -15,7 +15,7 @@ class OmniAuth::Strategies::Doorkeeper < OmniAuth::Strategies::OAuth2
 
   extra do
     {
-      raw_info: => raw_info
+      raw_info: raw_info
     }
   end
 

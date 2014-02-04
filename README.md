@@ -52,6 +52,12 @@ Generate doorkeeper boilerplate:
 rails generate doorkeeper:install
 ```
 
+Generate doorkeeper migration:
+
+```bash
+rails generate doorkeeper:migration
+```
+
 Migrate the db:
 
 ```bash
