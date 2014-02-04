@@ -4,19 +4,6 @@ This plugin adds authentication strategy for a rails application that uses doork
 
 ## Usage
 
-### Prepare your discourse app
-
-Clone the repo and drop it into your discourse plugins directory.
-
-Rename ```settings.yml.example``` to ```settings.yml``` and edit the file with your config data.
-
-If you're wondering where you get that data, then visit your doorkeeper endpoint app at
-```/auths/applications```, then create a new authorized application, which must have a Redirect uri with
-the format ```http://discourse.domain/auth/doorkeeper/callback```
-
-At this point you can copy the secret and key values from the newly generate application
-settings to your plugin settings file
-
 ### Prepare your oauth provider app
 
 Add gems to gemfile (assuming you're using devise for authentication and Active Record):
@@ -43,6 +30,7 @@ Add a root path ro your routes.rb file:
 ```ruby
 root to: "home#index"
 ```
+(if you don't have a homepage, then it's the right time to create one).
 
 For more details, please visit the devise gem github page.
 
@@ -74,23 +62,25 @@ Doorkeeper.configure do
 end
 ```
 
-Generate the Api endpoint for authentication. Add the following controller:
+Generate the Api endpoint for authentication. Add the following controller in
+`app/controllers/api/v1/credentials_controller.rb:
 
 ```ruby
 module Api
   module V1
     class CredentialsController < ApplicationController
-    doorkeeper_for :all
-    respond_to     :json
+      doorkeeper_for :all
+      respond_to     :json
 
-    def me
-      respond_with current_resource_owner
-    end
+      def me
+        respond_with current_resource_owner
+      end
 
-    private
+      private
 
-    def current_resource_owner
-      User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
+      def current_resource_owner
+        User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
+      end
     end
   end
 end
@@ -107,3 +97,18 @@ end
 ```
 
 For more details, please visit the doorkeeper gem github page.
+
+### Prepare your discourse app
+
+Clone the repo and drop it into your discourse plugins directory.
+
+Rename ```settings.yml.example``` to ```settings.yml``` and edit the file with your config data.
+
+If you're wondering where you get that data, then visit your doorkeeper endpoint app at
+```/auths/applications```, and create a new authorized application, which must have a Redirect uri with
+the format ```http://discourse.domain/auth/doorkeeper/callback```
+
+At this point you can copy the secret and key values from the newly generate application
+settings to your plugin settings file.
+
+I suggest you to use pow in order to test the sign in process in development.
