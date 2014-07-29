@@ -34,5 +34,5 @@ auth_provider title:         settings.title,
               frame_width:   settings.frame_width,
               frame_height:  settings.frame_height
 
-register_asset 'doorkeeper.js'
+register_asset 'doorkeeper.js', :server_side
 register_asset 'doorkeeper.css'
