@@ -102,13 +102,25 @@ For more details, please visit the doorkeeper gem github page.
 
 Clone the repo and drop it into your discourse plugins directory.
 
-Rename ```settings.yml.example``` to ```settings.yml``` and edit the file with your config data.
+Rename ```settings.yml.example``` to ```settings.yml``` and edit the file with your doorkeeper app config data.
 
-If you're wondering where you get that data, then visit your doorkeeper endpoint app at
-```/auths/applications```, and create a new authorized application, which must have a Redirect uri with
-the format ```http://discourse.domain/auth/doorkeeper/callback```
+At a minimum, you have to update this section:
 
-At this point you can copy the secret and key values from the newly generate application
-settings to your plugin settings file.
+```yaml
+# enviornment specific settings:
+environments:
+  development:
+    endpoint: http://doorkeeper_app.dev
+    key: 28e5d51993bcf072e0d6c6a33c65327fcc794bee70931af106ed8f82e1a61dde
+    secret: b5ffd4b090faa6d47aed8f7371e9aa0521d24a277c77b1426eb8d33afc00c137
+```
 
-I suggest you to use pow in order to test the sign in process in development.
+`endpoint` is your doorkeeper server application domain, I suggest you to use pow 
+in order to test the sign in process in development, but you can use something like 
+`localhost:3000` and `localhost:3001` for the applications as well.
+
+In order to get the `key` and `secret` values you have to register a new client application on your doorkeeper app. 
+First, create a user if none exists, and log in. Then visit `/oauth/applications` and create a new client 
+application with a redirect uri with the format ```http://discourse.domain/auth/doorkeeper/callback```. 
+At the end of the process you will get values for the key and secret settings.
+
